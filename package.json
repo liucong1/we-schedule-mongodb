@@ -1,6 +1,6 @@
 {
   "name": "we-schedule-mongodb",
-  "version": "1.0.3",
+  "version": "1.0.8",
   "description": "Interface for operating mongodb in grape-cms & we-schedule",
   "main": "./dist/index.js",
   "author": "Liu Cong",

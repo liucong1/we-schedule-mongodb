@@ -22,8 +22,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mongoose = require('mongoose');
 
 var scheduleSchema = new mongoose.Schema({
+    //channelId
+    channelId: {
+        type: String,
+        required: true
+    },
     //需要操作的内容id
     contentId: {
+        type: String,
+        required: true
+    },
+    //对应文档的保存记录id
+    recordId: {
         type: String,
         required: true
     },
@@ -127,6 +137,7 @@ scheduleSchema.statics.isUnpublishedExist = function () {
 
 /**
  * 获取所有尚未发布的任务
+ * 非"timeout|success|cancel"状态的任务视为未成功发布
  * return Array
  */
 scheduleSchema.statics.getAllUnpublishedTask = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
@@ -137,7 +148,7 @@ scheduleSchema.statics.getAllUnpublishedTask = (0, _asyncToGenerator3.default)(_
                 case 0:
                     task = mongoose.model('Schedule');
                     _context2.next = 3;
-                    return task.find({ state: { "$in": ["init", "process"] } }).exec();
+                    return task.find({ state: { "$nin": ["timeout", "success", "cancel"] } }).exec();
 
                 case 3:
                     response = _context2.sent;

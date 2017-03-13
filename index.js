@@ -9,8 +9,18 @@ const mongoose = require('mongoose');
 
 let scheduleSchema = new mongoose.Schema(
     {
+        //channelId
+        channelId:{
+            type : String,
+            required : true
+        },
         //需要操作的内容id
         contentId:{
+            type : String,
+            required : true
+        },
+        //对应文档的保存记录id
+        recordId:{
             type : String,
             required : true
         },
@@ -94,11 +104,12 @@ scheduleSchema.statics.isUnpublishedExist = async function(contentId){
 
 /**
  * 获取所有尚未发布的任务
+ * 非"timeout|success|cancel"状态的任务视为未成功发布
  * return Array
  */
 scheduleSchema.statics.getAllUnpublishedTask = async function(){
     const task = mongoose.model('Schedule' );
-    let response = await task.find({ state: {"$in":["init","process"]} }).exec();
+    let response = await task.find({ state: {"$nin":["timeout","success","cancel"]} }).exec();
     return response;
 };
 
