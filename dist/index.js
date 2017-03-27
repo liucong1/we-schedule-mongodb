@@ -37,11 +37,11 @@ var scheduleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    //任务类型：data|article|page
+    //任务类型：data|article
     contentType: {
         type: String,
         required: true,
-        enum: ['data', 'article', 'page']
+        enum: ['data', 'article']
     },
     createUserId: {
         type: String,
